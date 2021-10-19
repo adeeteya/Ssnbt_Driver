@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -59,20 +58,21 @@ class _VerificationScreenState extends State<VerificationScreen>
         });
       }).onError((error, stackTrace) {
         showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-                  title: const Text('Error'),
-                  content: const Text('Invalid Otp Entered, Please Try Again'),
-                  actions: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                        enterOtpManually(verificationId);
-                      },
-                      child: const Text('Ok'),
-                    )
-                  ],
-                ));
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('Error'),
+            content: const Text('Invalid Otp Entered, Please Try Again'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  enterOtpManually(verificationId);
+                },
+                child: const Text('Ok'),
+              )
+            ],
+          ),
+        );
       });
     }
   }

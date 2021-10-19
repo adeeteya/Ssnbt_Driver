@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ssn_bt_driver/screens/on_boarding.dart';
 import 'package:ssn_bt_driver/screens/sign_in.dart';
-
 import 'screens/home.dart';
 
 class Wrapper extends StatefulWidget {

@@ -23,7 +23,7 @@ class LostFound extends StatelessWidget {
             const SizedBox(height: 20),
             Flexible(
               child: StreamBuilder<QuerySnapshot?>(
-                  stream: FirestoreService().lostItemRequests,
+                  stream: FirestoreService().lostItemRequests("21"),
                   builder: (context, snapshot) {
                     if (snapshot.hasError) {
                       return Center(child: Text(snapshot.error.toString()));
@@ -39,8 +39,9 @@ class LostFound extends StatelessWidget {
                           ),
                         );
                       } else {
-                        lostItemRequests.map((e) {
-                          LostItem.fromJson(e.data() as Map<String, dynamic>);
+                        lostItemRequests.map((requestData) {
+                          LostItem.fromJson(
+                              requestData.data() as Map<String, dynamic>);
                         });
                         return ListView(
                           children: lostItemRequests

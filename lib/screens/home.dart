@@ -17,24 +17,26 @@ class _HomeState extends State<Home> {
     const ToolsPage(),
     const LostFound()
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          currentIndex: _currentPage,
-          onTap: (index) {
-            setState(() {
-              _currentPage = index;
-            });
-          },
-          items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-            BottomNavigationBarItem(icon: Icon(Icons.menu), label: "Tools"),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.business_center), label: "LostFound")
-          ]),
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        currentIndex: _currentPage,
+        onTap: (index) {
+          setState(() {
+            _currentPage = index;
+          });
+        },
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+          BottomNavigationBarItem(icon: Icon(Icons.menu), label: "Tools"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.business_center), label: "LostFound"),
+        ],
+      ),
       body: _pages[_currentPage],
     );
   }

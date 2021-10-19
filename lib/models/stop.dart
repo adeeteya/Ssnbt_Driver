@@ -7,6 +7,13 @@ class Stop {
   final double longitude;
 
   Stop(this.stopName, this.time, this.latitude, this.longitude);
+  @override
+  String toString() {
+    String hour = (time.hour < 10) ? '0${time.hour}' : '${time.hour}';
+    String minutes = (time.minute < 10) ? '0${time.minute}' : '${time.minute}';
+
+    return '$hour:$minutes AM  ' + stopName;
+  }
 }
 
 //Route 1

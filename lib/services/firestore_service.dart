@@ -9,8 +9,11 @@ class FirestoreService {
         .update({'approved': isApproved});
   }
 
-  Stream<QuerySnapshot?> get lostItemRequests => _instance
-      .collection('lostItems')
-      .where('approved', isNull: true)
-      .snapshots();
+  Stream<QuerySnapshot?> lostItemRequests(String busNumber) {
+    return _instance
+        .collection('lostItems')
+        .where('approved', isNull: true)
+        .where('busNumber', isEqualTo: busNumber)
+        .snapshots();
+  }
 }
