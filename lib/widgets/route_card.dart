@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ssnbt/models/stop.dart';
+import 'package:ssn_bt_driver/models/stop.dart';
 
 class RouteCard extends StatelessWidget {
   final String routeNumber;

@@ -1,12 +1,12 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:ssn_bt_driver/models/lost_item.dart';
-import 'package:ssn_bt_driver/services/firestore_service.dart';
+import 'package:get/get.dart';
+import 'package:ssn_bt_driver/controllers/firestore_controller.dart';
+import 'package:ssn_bt_driver/screens/home.dart';
+import 'package:ssn_bt_driver/screens/tools_page.dart';
 import 'package:ssn_bt_driver/widgets/lost_item_card.dart';
 
 class LostFound extends StatelessWidget {
   const LostFound({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,45 +22,48 @@ class LostFound extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             Flexible(
-              child: StreamBuilder<QuerySnapshot?>(
-                  stream: FirestoreService().lostItemRequests("21"),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasError) {
-                      return Center(child: Text(snapshot.error.toString()));
+              child: GetX<FirestoreController>(
+                  init: Get.put(FirestoreController()),
+                  builder: (controller) {
+                    if (controller.lostItemsList.isEmpty) {
+                      return const Center(
+                        child: Text(
+                          'No Lost Items Reported',
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                      );
+                    } else {
+                      return ListView.builder(
+                        itemCount: controller.lostItemsList.length,
+                        itemBuilder: (_, index) {
+                          return LostItemCard(
+                            lostItem: controller.lostItemsList[index],
+                          );
+                        },
+                      );
                     }
-                    if (snapshot.connectionState == ConnectionState.active) {
-                      List<QueryDocumentSnapshot> lostItemRequests =
-                          snapshot.data?.docs ?? [];
-                      if (lostItemRequests.isEmpty) {
-                        return const Center(
-                          child: Text(
-                            'No Lost Items Reported',
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                        );
-                      } else {
-                        lostItemRequests.map((requestData) {
-                          LostItem.fromJson(
-                              requestData.data() as Map<String, dynamic>);
-                        });
-                        return ListView(
-                          children: lostItemRequests
-                              .map(
-                                (lostItem) => LostItemCard(
-                                  lostItemId: lostItem.id,
-                                  lostItem: LostItem.fromJson(
-                                      lostItem.data() as Map<String, dynamic>),
-                                ),
-                              )
-                              .toList(),
-                        );
-                      }
-                    }
-                    return const Center(child: CircularProgressIndicator());
                   }),
             ),
           ],
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        currentIndex: 2,
+        onTap: (index) {
+          if (index == 0) {
+            Get.off(() => const Home(), transition: Transition.fadeIn);
+          } else if (index == 1) {
+            Get.off(() => const ToolsPage(), transition: Transition.fadeIn);
+          }
+        },
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+          BottomNavigationBarItem(icon: Icon(Icons.menu), label: "Tools"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.business_center), label: "LostFound"),
+        ],
       ),
     );
   }

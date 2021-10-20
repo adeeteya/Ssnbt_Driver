@@ -17,4 +17,11 @@ const textInputDecoration = InputDecoration(
     ),
     borderRadius: BorderRadius.all(Radius.circular(20)),
   ),
+  errorBorder: OutlineInputBorder(
+    borderSide: BorderSide(
+      color: Colors.red,
+      width: 2,
+    ),
+    borderRadius: BorderRadius.all(Radius.circular(20)),
+  ),
 );

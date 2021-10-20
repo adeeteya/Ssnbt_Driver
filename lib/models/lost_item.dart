@@ -1,4 +1,5 @@
 class LostItem {
+  String id;
   String name;
   String? description;
   String busNumber;
@@ -6,15 +7,17 @@ class LostItem {
   int contactNumber;
   bool? approved;
   LostItem(
-      {this.name = "",
+      {this.id = "",
+      this.name = "",
       this.description,
       this.contactNumber = 0,
       this.busNumber = "1",
       this.imagePath,
       this.approved});
 
-  factory LostItem.fromJson(Map<String, dynamic> json) {
+  factory LostItem.fromJson(String id, Map<String, dynamic> json) {
     return LostItem(
+        id: id,
         name: json['name'] as String,
         description: json['description'] as String?,
         busNumber: json['busNumber'] as String,

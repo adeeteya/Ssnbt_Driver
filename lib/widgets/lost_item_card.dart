@@ -1,14 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:ssn_bt_driver/controllers/firestore_controller.dart';
 import 'package:ssn_bt_driver/models/lost_item.dart';
-import 'package:ssn_bt_driver/widgets/loading_yes_button.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class LostItemCard extends StatelessWidget {
   final LostItem lostItem;
-  final String lostItemId;
-  const LostItemCard(
-      {Key? key, required this.lostItem, required this.lostItemId})
-      : super(key: key);
+  LostItemCard({Key? key, required this.lostItem}) : super(key: key);
+  final FirestoreController _firestoreController = Get.find();
+  void confirmationDialog(bool isApproved) {
+    Get.dialog(
+      AlertDialog(
+        title: Text('${(isApproved) ? 'Approve' : 'Decline'} Request'),
+        content: Text(
+            'Are you Sure you want to ${(isApproved) ? 'approve' : 'decline'} this request?'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Get.back();
+            },
+            child: const Text('Cancel'),
+          ),
+          Obx(() {
+            return TextButton(
+              onPressed: () async {
+                _firestoreController.isLoading.value = true;
+                await _firestoreController.setApproved(lostItem.id, isApproved);
+                _firestoreController.isLoading.value = false;
+                Get.back();
+              },
+              child: (_firestoreController.isLoading.value)
+                  ? const CircularProgressIndicator()
+                  : const Text('Yes'),
+            );
+          }),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,23 +55,7 @@ class LostItemCard extends StatelessWidget {
                       shape: CircleBorder(), color: Colors.red),
                   child: IconButton(
                     onPressed: () {
-                      showDialog(
-                          context: context,
-                          builder: (context) => AlertDialog(
-                                title: const Text('Decline Request'),
-                                content: const Text(
-                                    'Are you Sure you want to decline this request?'),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: const Text('Cancel'),
-                                  ),
-                                  LoadingYesButton(
-                                      itemId: lostItemId, isApproved: false),
-                                ],
-                              ));
+                      confirmationDialog(false);
                     },
                     color: Colors.white,
                     icon: const Icon(Icons.close),
@@ -60,31 +73,18 @@ class LostItemCard extends StatelessWidget {
                           )
                         : FadeInImage.assetNetwork(
                             placeholder: 'assets/lostImageLoading.gif',
-                            image: lostItem.imagePath!),
+                            image: lostItem.imagePath!,
+                          ),
                   ),
                 ),
                 Ink(
                   decoration: const ShapeDecoration(
-                      shape: CircleBorder(), color: Colors.green),
+                    shape: CircleBorder(),
+                    color: Colors.green,
+                  ),
                   child: IconButton(
                     onPressed: () {
-                      showDialog(
-                          context: context,
-                          builder: (context) => AlertDialog(
-                                title: const Text('Approve Request'),
-                                content: const Text(
-                                    'Are you Sure you want to approve this request?'),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: const Text('Cancel'),
-                                  ),
-                                  LoadingYesButton(
-                                      itemId: lostItemId, isApproved: true),
-                                ],
-                              ));
+                      confirmationDialog(true);
                     },
                     color: Colors.white,
                     icon: const Icon(Icons.done),
@@ -92,9 +92,10 @@ class LostItemCard extends StatelessWidget {
                 ),
               ],
             ),
-            Text(lostItem.name,
-                style:
-                    const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+            Text(
+              lostItem.name,
+              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            ),
             TextButton.icon(
               onPressed: () {
                 launch("tel:${lostItem.contactNumber}");
@@ -105,8 +106,10 @@ class LostItemCard extends StatelessWidget {
                 style: const TextStyle(color: Colors.blue),
               ),
             ),
-            Text(lostItem.description ?? '',
-                style: const TextStyle(fontSize: 16))
+            Text(
+              lostItem.description ?? '',
+              style: const TextStyle(fontSize: 16),
+            )
           ],
         ),
       ),

@@ -1,27 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:ssn_bt_driver/controllers/verification_controller.dart';
 
-class ManualVerification extends StatefulWidget {
-  final String mobileNumber;
-  const ManualVerification({Key? key, required this.mobileNumber})
-      : super(key: key);
-
-  @override
-  _ManualVerificationState createState() => _ManualVerificationState();
-}
-
-class _ManualVerificationState extends State<ManualVerification> {
-  String smsCode = '';
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
+class ManualVerification extends StatelessWidget {
+  ManualVerification({Key? key}) : super(key: key);
+  final VerificationController _verificationController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +25,8 @@ class _ManualVerificationState extends State<ManualVerification> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Text('We sent a code to the mobile number ${widget.mobileNumber}',
+            Text(
+                'We sent a code to the mobile number ${_verificationController.mobileNumberString}',
                 style:
                     const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center),
@@ -55,7 +40,7 @@ class _ManualVerificationState extends State<ManualVerification> {
                 PinCodeTextField(
                   appContext: context,
                   onChanged: (val) {
-                    smsCode = val;
+                    _verificationController.smsCode = val;
                   },
                   length: 6,
                   autoFocus: true,
@@ -84,7 +69,7 @@ class _ManualVerificationState extends State<ManualVerification> {
               height: 50,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.pop(context, [smsCode]);
+                  Get.back();
                 },
                 child: const Text(
                   'Submit',
