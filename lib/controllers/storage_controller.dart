@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:ssn_bt_driver/controllers/firestore_controller.dart';
 
 class StorageController extends GetxController {
   late SharedPreferences _prefs;

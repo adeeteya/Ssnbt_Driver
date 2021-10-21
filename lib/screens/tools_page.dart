@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ssn_bt_driver/screens/OnBoarding/select_route.dart';
-import 'package:ssn_bt_driver/screens/lost_found.dart';
+import 'package:ssn_bt_driver/widgets/bottom_navbar.dart';
 import 'package:ssn_bt_driver/widgets/tool_button.dart';
-
-import 'home.dart';
 
 class ToolsPage extends StatelessWidget {
   const ToolsPage({Key? key}) : super(key: key);
@@ -31,24 +29,7 @@ class ToolsPage extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        currentIndex: 1,
-        onTap: (index) {
-          if (index == 0) {
-            Get.off(() => const Home(), transition: Transition.fadeIn);
-          } else if (index == 2) {
-            Get.off(() => const LostFound(), transition: Transition.fadeIn);
-          }
-        },
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.menu), label: "Tools"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.business_center), label: "LostFound"),
-        ],
-      ),
+      bottomNavigationBar: const BottomNavBar(currentIndex: 1),
     );
   }
 }
