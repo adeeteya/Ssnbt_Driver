@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ssn_bt_driver/controllers/firestore_controller.dart';
+import 'package:ssn_bt_driver/controllers/lostitem_controller.dart';
 import 'package:ssn_bt_driver/models/lost_item.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class LostItemCard extends StatelessWidget {
   final LostItem lostItem;
   LostItemCard({Key? key, required this.lostItem}) : super(key: key);
-  final FirestoreController _firestoreController = Get.find();
+  final LostItemController _firestoreController = Get.find();
   void confirmationDialog(bool isApproved) {
     Get.dialog(
       AlertDialog(

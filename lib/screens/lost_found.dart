@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ssn_bt_driver/controllers/firestore_controller.dart';
+import 'package:ssn_bt_driver/controllers/lostitem_controller.dart';
 import 'package:ssn_bt_driver/widgets/bottom_navbar.dart';
 import 'package:ssn_bt_driver/widgets/lost_item_card.dart';
 
@@ -21,8 +21,8 @@ class LostFound extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             Flexible(
-              child: GetX<FirestoreController>(
-                  init: Get.put(FirestoreController()),
+              child: GetX<LostItemController>(
+                  init: Get.put(LostItemController()),
                   builder: (controller) {
                     if (controller.lostItemsList.isEmpty) {
                       return const Center(

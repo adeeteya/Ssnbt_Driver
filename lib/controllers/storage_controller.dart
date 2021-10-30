@@ -9,8 +9,8 @@ class StorageController extends GetxController {
 
   @override
   void onInit() {
-    super.onInit();
     getInstance();
+    super.onInit();
   }
 
   void getInstance() async {

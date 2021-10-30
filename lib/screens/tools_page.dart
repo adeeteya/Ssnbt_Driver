@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ssn_bt_driver/controllers/location_controller.dart';
 import 'package:ssn_bt_driver/screens/OnBoarding/select_route.dart';
 import 'package:ssn_bt_driver/widgets/bottom_navbar.dart';
 import 'package:ssn_bt_driver/widgets/tool_button.dart';
 
 class ToolsPage extends StatelessWidget {
-  const ToolsPage({Key? key}) : super(key: key);
-
+  ToolsPage({Key? key}) : super(key: key);
+  final LocationController _locationController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: const BottomNavBar(currentIndex: 1),
       body: Column(
         children: [
           Expanded(flex: 2, child: Image.asset('assets/tools_page_vector.png')),
@@ -19,17 +21,23 @@ class ToolsPage extends StatelessWidget {
               children: [
                 ToolButton(text: "View Report", onPressed: () {}),
                 ToolButton(
-                    text: "Change Routes",
+                    text: "Change Route",
                     onPressed: () {
+                      try {
+                        _locationController.dispose();
+                      } catch (error) {}
                       Get.to(() => SelectRoute());
                     }),
-                ToolButton(text: "Alert!", onPressed: () {}),
+                ToolButton(
+                    text: "Alert!",
+                    onPressed: () {
+                      _locationController.reportBreakdown();
+                    }),
               ],
             ),
           ),
         ],
       ),
-      bottomNavigationBar: const BottomNavBar(currentIndex: 1),
     );
   }
 }

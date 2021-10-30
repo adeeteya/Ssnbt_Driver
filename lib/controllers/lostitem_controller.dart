@@ -4,7 +4,7 @@ import 'package:ssn_bt_driver/controllers/storage_controller.dart';
 import 'package:ssn_bt_driver/models/lost_item.dart';
 import 'package:ssn_bt_driver/models/route.dart';
 
-class FirestoreController extends GetxController {
+class LostItemController extends GetxController {
   final FirebaseFirestore _instance = FirebaseFirestore.instance;
   final StorageController _storageController = Get.find();
   var lostItemsList = <LostItem>[].obs;
