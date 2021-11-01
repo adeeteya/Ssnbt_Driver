@@ -18,13 +18,16 @@ class SignIn extends StatelessWidget {
           child: Column(
             children: [
               Expanded(
+                flex: 2,
                 child: Image.asset('assets/logoVector.png'),
               ),
               Expanded(
+                flex: 3,
                 child: Column(
                   children: [
                     TextFormField(
                       textInputAction: TextInputAction.next,
+                      autofocus: true,
                       onChanged: (val) {
                         _authController.name = val;
                       },
@@ -45,10 +48,11 @@ class SignIn extends StatelessWidget {
                           ? "Please Enter a valid Mobile Number"
                           : null,
                       decoration: textInputDecoration.copyWith(
-                          prefixText:
-                              (_authController.mobileNumber != 0) ? "+91 " : "",
-                          counterText: '',
-                          hintText: "Mobile Number"),
+                        prefixText:
+                            (_authController.mobileNumber != 0) ? "+91 " : "",
+                        counterText: '',
+                        hintText: "Mobile Number",
+                      ),
                     ),
                     const SizedBox(height: 40),
                     ElevatedButton(
@@ -66,9 +70,12 @@ class SignIn extends StatelessWidget {
                       style: ElevatedButton.styleFrom(
                         primary: Colors.white,
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15)),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
                         padding: const EdgeInsets.symmetric(
-                            vertical: 15, horizontal: 30),
+                          vertical: 15,
+                          horizontal: 30,
+                        ),
                       ),
                     ),
                   ],

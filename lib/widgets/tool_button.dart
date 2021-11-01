@@ -19,7 +19,7 @@ class ToolButton extends StatelessWidget {
           style: const TextStyle(
             fontSize: 18,
             color: Colors.blue,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w600,
           ),
         ),
         style: ElevatedButton.styleFrom(primary: Colors.white),

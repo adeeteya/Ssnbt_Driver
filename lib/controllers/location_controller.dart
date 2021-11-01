@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:location/location.dart';
 import 'package:ssn_bt_driver/controllers/storage_controller.dart';
 import 'package:ssn_bt_driver/models/route.dart';
+import 'package:ssn_bt_driver/models/stop.dart';
 
 class LocationController extends GetxController {
   Location location = Location();
@@ -54,11 +55,35 @@ class LocationController extends GetxController {
     if (permissionsGranted) {
       currentStatus.value = 1;
       _locationDocumentRef.set(
-        {'driverNumber': driverNumber, 'currentStatus': currentStatus.value},
+        {
+          'driverNumber': driverNumber,
+          'currentStatus': currentStatus.value,
+          'stopsReached': stopsReached.value
+        },
+        SetOptions(merge: true),
       );
       locationStreamSubscription = location.onLocationChanged.listen((event) {
+        Stop nextStop = routesList[_storageController.routeIndex.value]
+            .stops[stopsReached.value];
+
+        if (_coordinateDistance(event.latitude, event.longitude,
+                nextStop.latitude, nextStop.longitude) <
+            0.2) {
+          stopsReached.value++;
+          if (nextStop.stopName == "College") {
+            stopsReached.value--;
+            _locationDocumentRef.set(
+              {'time': Timestamp.now(), 'stopsReached': stopsReached.value},
+              SetOptions(merge: true),
+            );
+          }
+        }
         _locationDocumentRef.set(
-          {'latitude': event.latitude, 'longitude': event.longitude},
+          {
+            'latitude': event.latitude,
+            'longitude': event.longitude,
+            'stopsReached': stopsReached.value
+          },
           SetOptions(merge: true),
         );
       });
@@ -68,7 +93,9 @@ class LocationController extends GetxController {
   }
 
   void stopSharing() async {
-    await locationStreamSubscription.cancel();
+    if (currentStatus.value == 1) {
+      await locationStreamSubscription.cancel();
+    }
     currentStatus.value = 0;
     await FirebaseFirestore.instance
         .collection('location')
@@ -91,5 +118,14 @@ class LocationController extends GetxController {
     );
     Get.snackbar('Alerted', 'Breakdown alert sent successfully',
         snackPosition: SnackPosition.BOTTOM);
+  }
+
+  double _coordinateDistance(lat1, lon1, lat2, lon2) {
+    var p = 0.017453292519943295;
+    var c = cos;
+    var a = 0.5 -
+        c((lat2 - lat1) * p) / 2 +
+        c(lat1 * p) * c(lat2 * p) * (1 - c((lon2 - lon1) * p)) / 2;
+    return 12742 * asin(sqrt(a));
   }
 }

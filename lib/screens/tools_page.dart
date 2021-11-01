@@ -19,13 +19,16 @@ class ToolsPage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                ToolButton(text: "View Report", onPressed: () {}),
+                ToolButton(
+                    text: "View Report",
+                    onPressed: () {
+                      Get.snackbar("Admins Only",
+                          "Please inform the admin to check the firebase console");
+                    }),
                 ToolButton(
                     text: "Change Route",
                     onPressed: () {
-                      try {
-                        _locationController.dispose();
-                      } catch (error) {}
+                      _locationController.stopSharing();
                       Get.to(() => SelectRoute());
                     }),
                 ToolButton(

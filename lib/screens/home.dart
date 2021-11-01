@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:ssn_bt_driver/controllers/location_controller.dart';
 import 'package:ssn_bt_driver/widgets/bottom_navbar.dart';
 import 'package:ssn_bt_driver/widgets/details_card.dart';
+import 'package:ssn_bt_driver/widgets/route_stops_card.dart';
 
 class Home extends StatelessWidget {
   Home({Key? key}) : super(key: key);
@@ -40,44 +41,42 @@ class Home extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
+              DetailsCard(),
               Expanded(
-                child: DetailsCard(),
+                child: RouteStopsCard(),
               ),
-              Expanded(
-                flex: 2,
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Obx(() {
-                    return ElevatedButton.icon(
-                      onPressed: () {
-                        if (_locationController.currentStatus.value == 1) {
-                          _locationController.stopSharing();
-                        } else {
-                          _locationController.startSharing();
-                        }
-                      },
-                      icon: (_locationController.currentStatus.value == 1)
-                          ? const Icon(Icons.highlight_off)
-                          : const Icon(Icons.share_location),
-                      label: Text(
-                        (_locationController.currentStatus.value == 1)
-                            ? 'Stop Sharing'
-                            : 'Share Location',
-                        style: const TextStyle(
-                          fontSize: 20,
-                        ),
+              const SizedBox(height: 10),
+              Center(
+                child: Obx(() {
+                  return ElevatedButton.icon(
+                    onPressed: () {
+                      if (_locationController.currentStatus.value == 1) {
+                        _locationController.stopSharing();
+                      } else {
+                        _locationController.startSharing();
+                      }
+                    },
+                    icon: (_locationController.currentStatus.value == 1)
+                        ? const Icon(Icons.highlight_off)
+                        : const Icon(Icons.share_location),
+                    label: Text(
+                      (_locationController.currentStatus.value == 1)
+                          ? 'Stop Sharing'
+                          : 'Share Location',
+                      style: const TextStyle(
+                        fontSize: 20,
                       ),
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.white,
-                        onPrimary: Colors.black,
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 20,
-                          horizontal: 40,
-                        ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.white,
+                      onPrimary: Colors.black,
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 20,
+                        horizontal: 40,
                       ),
-                    );
-                  }),
-                ),
+                    ),
+                  );
+                }),
               )
             ],
           ),

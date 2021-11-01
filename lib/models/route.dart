@@ -2,10 +2,11 @@ import 'stop.dart';
 
 class Route {
   final String routeNumber;
-  final int? driverNumber;
   final int inChargeNumber;
   final List<Stop> stops;
-  Route(this.routeNumber, this.inChargeNumber, this.stops, {this.driverNumber});
+  final String busRegistrationNumber;
+  Route(this.routeNumber, this.inChargeNumber, this.stops,
+      {this.busRegistrationNumber = "TN 01 BE 2343"});
 }
 //college
 
