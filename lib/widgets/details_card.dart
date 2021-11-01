@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:ssn_bt_driver/controllers/location_controller.dart';
 import 'package:ssn_bt_driver/controllers/storage_controller.dart';
 import 'package:ssn_bt_driver/models/route.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DetailsCard extends StatelessWidget {
   DetailsCard({Key? key}) : super(key: key);
@@ -63,28 +64,33 @@ class DetailsCard extends StatelessWidget {
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    Text(
-                      (_locationController.currentStatus.value == 0)
-                          ? 'Idle'
-                          : (_locationController.currentStatus.value == 1)
-                              ? 'RUNNING'
-                              : 'Breakdown',
-                      style: TextStyle(
-                        color: (_locationController.currentStatus.value == 0)
-                            ? Colors.grey
+                    Obx(() {
+                      return Text(
+                        (_locationController.currentStatus.value == 0)
+                            ? 'Idle'
                             : (_locationController.currentStatus.value == 1)
-                                ? Colors.green
-                                : Colors.red,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                                ? 'RUNNING'
+                                : 'Breakdown',
+                        style: TextStyle(
+                          color: (_locationController.currentStatus.value == 0)
+                              ? Colors.grey
+                              : (_locationController.currentStatus.value == 1)
+                                  ? Colors.green
+                                  : Colors.red,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      );
+                    }),
                   ],
                 ),
               ],
             ),
             TextButton.icon(
-              onPressed: () {},
+              onPressed: () {
+                launch(
+                    "tel:${routesList[_storageController.routeIndex.value].inChargeNumber}");
+              },
               icon: const Icon(Icons.call),
               label: const Text('Call Supervisor'),
               style: TextButton.styleFrom(
