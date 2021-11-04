@@ -7,7 +7,7 @@ import 'package:ssn_bt_driver/widgets/route_stops_card.dart';
 
 class Home extends StatelessWidget {
   Home({Key? key}) : super(key: key);
-  final _locationController = Get.put(LocationController());
+  final _locationController = Get.put(LocationController(), permanent: true);
 
   @override
   Widget build(BuildContext context) {

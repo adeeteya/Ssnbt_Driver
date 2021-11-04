@@ -21,51 +21,51 @@ class DetailsCard extends StatelessWidget {
         height: size.height * 0.20,
         width: size.width,
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        const Icon(Icons.directions_bus, color: Colors.amber),
-                        const SizedBox(width: 5),
-                        Text(
-                          routesList[_storageController.routeIndex.value]
-                              .routeNumber,
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        )
-                      ],
-                    ),
-                    Text(
-                      routesList[_storageController.routeIndex.value]
-                          .busRegistrationNumber,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
+        child: Obx(() {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          const Icon(Icons.directions_bus, color: Colors.amber),
+                          const SizedBox(width: 5),
+                          Text(
+                            routesList[_storageController.routeIndex.value]
+                                .routeNumber,
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          )
+                        ],
                       ),
-                    ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    const Text(
-                      'Current Status',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
+                      Text(
+                        routesList[_storageController.routeIndex.value]
+                            .busRegistrationNumber,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
-                    ),
-                    Obx(() {
-                      return Text(
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      const Text(
+                        'Current Status',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      Text(
                         (_locationController.currentStatus.value == 0)
                             ? 'Idle'
                             : (_locationController.currentStatus.value == 1)
@@ -80,25 +80,25 @@ class DetailsCard extends StatelessWidget {
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
-                      );
-                    }),
-                  ],
-                ),
-              ],
-            ),
-            TextButton.icon(
-              onPressed: () {
-                launch(
-                    "tel:${routesList[_storageController.routeIndex.value].inChargeNumber}");
-              },
-              icon: const Icon(Icons.call),
-              label: const Text('Call Supervisor'),
-              style: TextButton.styleFrom(
-                primary: const Color(0xFF5274EF),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-            ),
-          ],
-        ),
+              TextButton.icon(
+                onPressed: () {
+                  launch(
+                      "tel:${routesList[_storageController.routeIndex.value].inChargeNumber}");
+                },
+                icon: const Icon(Icons.call),
+                label: const Text('Call Supervisor'),
+                style: TextButton.styleFrom(
+                  primary: const Color(0xFF5274EF),
+                ),
+              ),
+            ],
+          );
+        }),
       ),
     );
   }

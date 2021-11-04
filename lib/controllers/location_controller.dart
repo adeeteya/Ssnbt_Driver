@@ -16,6 +16,7 @@ class LocationController extends GetxController {
   String? routeNumber;
   var currentStatus = 0.obs;
   var stopsReached = 0.obs;
+
   @override
   void dispose() {
     if (currentStatus.value == 1) {
@@ -58,7 +59,7 @@ class LocationController extends GetxController {
         {
           'driverNumber': driverNumber,
           'currentStatus': currentStatus.value,
-          'stopsReached': stopsReached.value
+          'stopsReached': stopsReached.value,
         },
         SetOptions(merge: true),
       );
