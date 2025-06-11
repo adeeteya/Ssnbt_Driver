@@ -48,6 +48,6 @@ A cross-platform Flutter app enabling bus drivers and route supervisors at SSN C
 
 | Screen | Preview |
 |--------|---------|
-| Home Screen | ![Login](screenshots/home_screen.png) |
-| Lost Found Screen | ![Breakdown](screenshots/lost_found_screen.png) |
-| Sign In Screen | ![LostFound](screenshots/sign_in.png) |
+| Home Screen |<img alt="Home Screen" src="screenshots/home_screen.png" height="587px" width="256px"/> |
+| Lost Found Screen | <img alt="Lost Found Screen" src="screenshots/lost_found_screen.png" height="587px" width="256px"/> |
+| Sign In Screen | <img alt="Sign In Screen" src="screenshots/sign_in.png" height="587px" width="256px"/> |
